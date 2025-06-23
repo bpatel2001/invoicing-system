@@ -1,0 +1,81 @@
+import { useState, useEffect } from 'react';
+
+// Helper to fetch quotes for a customer
+async function fetchCustomerQuotes(quotesUrl) {
+  try {
+    const res = await fetch(quotesUrl);
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data._embedded && Array.isArray(data._embedded.quoteses)) {
+        return data._embedded.quoteses;
+      }
+    }
+  } catch (e) {
+    // ignore error
+  }
+  return [];
+}
+
+function ViewCustomers() {
+  const [customers, setCustomers] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/customers')
+      .then(response => response.json())
+      .then(async data => {
+        if (data && data._embedded && Array.isArray(data._embedded.customerses)) {
+          // For each customer, fetch their quotes
+          const customersWithQuotes = await Promise.all(
+            data._embedded.customerses.map(async (customer) => {
+              let quotes = [];
+              if (customer._links && customer._links.quotes) {
+                quotes = await fetchCustomerQuotes(customer._links.quotes.href);
+              }
+              return { ...customer, quotes };
+            })
+          );
+          setCustomers(customersWithQuotes);
+        } else {
+          setCustomers([]);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching customers:', error);
+        setCustomers([]);
+      });
+  }, []);
+
+  return (
+    <div>
+      <h1>View Customers</h1>
+      <ul>
+        {customers.map((customer, idx) => {
+          const id = customer.id || (customer._links && customer._links.self
+            ? customer._links.self.href.split('/').pop()
+            : idx);
+          return (
+            <li key={id}>
+              ID: {id} | Name: {customer.name} | Address: {customer.address}
+              {customer.quotes && customer.quotes.length > 0 && (
+                <ul>
+                  {customer.quotes.map((quote, qidx) => {
+                    const qid = quote.id || (quote._links && quote._links.self
+                      ? quote._links.self.href.split('/').pop()
+                      : qidx);
+                    return (
+                      <li key={qid}>
+                        Quote ID: {qid} | Status: {quote.status} | Total Cost: {quote.totalCost}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+export default ViewCustomers;

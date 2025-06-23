@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import App from './App.jsx'
 import ViewQuotes from './views/ViewQuotes.jsx'
-import ViewUsers from './views/ViewUsers.jsx'
+import ViewCustomers from './views/ViewCustomers.jsx'
 import ViewProducts from './views/ViewProducts.jsx'
 import CreateQuote from './creates/CreateQuote.jsx'
 import CreateUser from './creates/CreateUser.jsx'
@@ -23,8 +23,8 @@ const router = createBrowserRouter([
       element: <ViewProducts />
     },
     {
-      path: '/viewusers',
-      element: <ViewUsers />
+      path: '/viewcustomers',
+      element: <ViewCustomers />
     },
     {
       path: '/createquote',

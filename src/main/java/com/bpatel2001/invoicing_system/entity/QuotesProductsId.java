@@ -1,41 +1,41 @@
 package com.bpatel2001.invoicing_system.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-
 import java.io.Serializable;
 import java.util.Objects;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class QuotesProductsId implements Serializable {
     @Column(name="quote_id")
-    private long quoteId;
+    private int quoteId;
 
     @Column(name="product_id")
-    private long productId;
+    private int productId;
 
     public QuotesProductsId() {
 
     }
 
-    public QuotesProductsId(long productId, long quoteId) {
+    public QuotesProductsId(int productId, int quoteId) {
         this.productId = productId;
         this.quoteId = quoteId;
     }
 
-    public long getQuoteId() {
+    public int getQuoteId() {
         return quoteId;
     }
 
-    public void setQuoteId(long quoteId) {
+    public void setQuoteId(int quoteId) {
         this.quoteId = quoteId;
     }
 
-    public long getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(long productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
