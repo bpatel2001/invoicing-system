@@ -7,15 +7,17 @@ import java.util.Objects;
 @Entity
 @Table(name="quote_products")
 public class QuotesProducts {
+    
+    // The Fix: Initialize the embedded ID to prevent NullPointerException.
     @EmbeddedId
-    private QuotesProductsId id;
+    private QuotesProductsId id = new QuotesProductsId();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // Using LAZY fetch is a good practice for performance
     @MapsId("quoteId")
     @JoinColumn(name="quote_id")
     private Quotes quote;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // Using LAZY fetch is a good practice for performance
     @MapsId("productId")
     @JoinColumn(name = "product_id")
     private Products product;
@@ -26,17 +28,18 @@ public class QuotesProducts {
     @Column(name = "price_at_quote", nullable = false)
     private double priceAtQuote;
 
+    // A no-argument constructor is required by JPA
     public QuotesProducts() {
-
     }
 
-    public QuotesProducts(QuotesProductsId id, Quotes quote, Products product, int quantity, double priceAtQuote) {
-        this.id = id;
+    public QuotesProducts(Quotes quote, Products product, int quantity, double priceAtQuote) {
         this.quote = quote;
         this.product = product;
         this.quantity = quantity;
         this.priceAtQuote = priceAtQuote;
     }
+
+    // --- Getters and Setters ---
 
     public QuotesProductsId getId() {
         return id;
@@ -78,18 +81,7 @@ public class QuotesProducts {
         this.priceAtQuote = priceAtQuote;
     }
 
-    public String getProductName() {
-        return product != null ? product.getName() : null;
-    }
-
-    @Override
-    public String toString() {
-        return "QuotesProducts{" +
-                "id=" + id +
-                ", quantity=" + quantity +
-                ", priceAtQuote=" + priceAtQuote +
-                '}';
-    }
+    // --- equals() and hashCode() ---
 
     @Override
     public boolean equals(Object o) {
