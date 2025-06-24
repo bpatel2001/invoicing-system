@@ -21,6 +21,11 @@ function ViewProducts() {
 
   return (
     <div>
+      <div className="navbar">
+        <button onClick={() => window.location.href = '/viewquotes'}>View Quotes</button>
+        <button onClick={() => window.location.href = '/viewproducts'}>View Products</button>
+        <button onClick={() => window.location.href = '/viewcustomers'}>View Customers</button>
+      </div>
       <h1>View Products</h1>
       <ul>
         {products.map((product, idx) => {
@@ -34,6 +39,9 @@ function ViewProducts() {
           );
         })}
       </ul>
+      <div className = "create">
+        <button onClick={() => window.location.href = '/createproduct'}>Create Product</button>
+      </div> 
     </div>
   );
 }

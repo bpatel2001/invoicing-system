@@ -20,14 +20,14 @@
   color: #2196f3;
 }
 
-.quickcreate {
+.create {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 10%;
 }
 
-.quickcreate button {
+.create button {
   font-size: 1rem;
   padding: 1rem 2rem;
 }

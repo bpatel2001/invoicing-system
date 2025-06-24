@@ -78,6 +78,10 @@ public class QuotesProducts {
         this.priceAtQuote = priceAtQuote;
     }
 
+    public String getProductName() {
+        return product != null ? product.getName() : null;
+    }
+
     @Override
     public String toString() {
         return "QuotesProducts{" +

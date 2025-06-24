@@ -6,7 +6,7 @@ import ViewQuotes from './views/ViewQuotes.jsx'
 import ViewCustomers from './views/ViewCustomers.jsx'
 import ViewProducts from './views/ViewProducts.jsx'
 import CreateQuote from './creates/CreateQuote.jsx'
-import CreateUser from './creates/CreateUser.jsx'
+import CreateCustomer from './creates/CreateCustomer.jsx'
 import CreateProduct from './creates/CreateProduct.jsx'
 
 const router = createBrowserRouter([
@@ -31,8 +31,8 @@ const router = createBrowserRouter([
       element: <CreateQuote />
     },
     {
-      path: '/createuser',
-      element: <CreateUser />
+      path: '/createcustomer',
+      element: <CreateCustomer />
     },
     {
       path: '/createproduct',

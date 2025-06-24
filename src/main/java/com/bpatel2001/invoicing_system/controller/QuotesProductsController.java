@@ -19,4 +19,11 @@ public class QuotesProductsController {
         QuotesProducts qp = quotesProductsService.addProductToQuote(dto);
         return ResponseEntity.ok(qp);
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAllProducts() {
+        quotesProductsService.deleteAllQuoteProducts();
+        // Return a 204 No Content response, which is standard for a successful DELETE
+        return ResponseEntity.noContent().build();
+    }
 }

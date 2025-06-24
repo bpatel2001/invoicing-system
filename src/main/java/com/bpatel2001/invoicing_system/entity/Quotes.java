@@ -32,6 +32,7 @@ public class Quotes {
     @OneToMany(mappedBy = "quote", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<QuotesProducts> quotesProducts = new HashSet<>();
 
+
     public Quotes () {
 
     }

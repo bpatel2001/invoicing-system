@@ -13,7 +13,7 @@ function App() {
         <button onClick={() => window.location.href = '/viewproducts'}>View Products</button>
         <button onClick={() => window.location.href = '/viewcustomers'}>View Customers</button>
       </div>
-      <div className="quickcreate">
+      <div className="create">
         <button onClick={() => window.location.href = '/createquote'}>Create Quote</button>
       </div>
     </>

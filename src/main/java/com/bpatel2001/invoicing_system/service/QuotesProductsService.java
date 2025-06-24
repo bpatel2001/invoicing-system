@@ -6,6 +6,11 @@ import com.bpatel2001.invoicing_system.dao.QuoteRepository;
 import com.bpatel2001.invoicing_system.dto.QuotesProductsDTO;
 import com.bpatel2001.invoicing_system.entity.*;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,20 +24,50 @@ public class QuotesProductsService {
     @Autowired
     private QuoteProductRepository quotesProductsRepository;
 
+    @Transactional
     public QuotesProducts addProductToQuote(QuotesProductsDTO dto) {
-        Quotes quote = quotesRepository.findById(dto.getQuoteId())
-                .orElseThrow(() -> new RuntimeException("Quote not found"));
-        Products product = productsRepository.findById(dto.getProductId())
-                .orElseThrow(() -> new RuntimeException("Product not found"));
 
         QuotesProductsId id = new QuotesProductsId(dto.getQuoteId(), dto.getProductId());
-        QuotesProducts qp = new QuotesProducts();
-        qp.setId(id);
-        qp.setQuote(quote);
-        qp.setProduct(product);
-        qp.setQuantity(dto.getQuantity());
-        qp.setPriceAtQuote(dto.getPriceAtQuote());
+        Optional<QuotesProducts> existingEntry = quotesProductsRepository.findById(id);
 
-        return quotesProductsRepository.save(qp);
+        if (existingEntry.isPresent()) {
+            // The UPDATE logic is fine, no changes needed here.
+            QuotesProducts quotesProductToUpdate = existingEntry.get();
+            quotesProductToUpdate.setQuantity(dto.getQuantity());
+            quotesProductToUpdate.setPriceAtQuote(dto.getPriceAtQuote());
+            
+            return quotesProductsRepository.save(quotesProductToUpdate);
+
+        } else {
+            // --- REVISED INSERT LOGIC ---
+            
+            // First, fetch the parent entities. This is correct.
+            Quotes quote = quotesRepository.findById(dto.getQuoteId())
+                    .orElseThrow(() -> new EntityNotFoundException("Quote not found with id: " + dto.getQuoteId()));
+
+            Products product = productsRepository.findById(dto.getProductId())
+                    .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + dto.getProductId()));
+
+            // Create a new instance
+            QuotesProducts newQuotesProduct = new QuotesProducts();
+
+            // Set the relationships. DO NOT set the ID manually.
+            // @MapsId will instruct JPA to populate the ID from these objects at save time.
+            newQuotesProduct.setQuote(quote);
+            newQuotesProduct.setProduct(product);
+            
+            // Set the extra columns on the join entity
+            newQuotesProduct.setQuantity(dto.getQuantity());
+            newQuotesProduct.setPriceAtQuote(dto.getPriceAtQuote());
+
+            // Save the new entry
+            return quotesProductsRepository.save(newQuotesProduct);
+        }
+    }
+
+    @Transactional
+    public void deleteAllQuoteProducts() {
+        // JpaRepository provides a highly efficient deleteAll() method
+        quotesProductsRepository.deleteAll();
     }
 }

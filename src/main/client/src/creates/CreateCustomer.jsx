@@ -1,4 +1,4 @@
-function CreateQuote() {
+function CreateCustomer() {
   return (
     <div>
       <div className="navbar">
@@ -6,9 +6,9 @@ function CreateQuote() {
         <button onClick={() => window.location.href = '/viewproducts'}>View Products</button>
         <button onClick={() => window.location.href = '/viewcustomers'}>View Customers</button>
       </div>
-      <h1>Create Quote</h1>
+      <h1>Create Customer</h1>
     </div>
   );
 }
 
-export default CreateQuote;
+export default CreateCustomer;
