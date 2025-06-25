@@ -18,10 +18,10 @@ async function createCustomer(customerName, customerAddress) {
     }
     
     const data = await response.json();
-    return data; // Return the created customer data
+    return data; 
   } catch (error) {
     console.error('Error creating customer:', error);
-    throw error; // Propagate the error
+    throw error; 
   }
 }
 

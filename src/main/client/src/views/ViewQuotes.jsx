@@ -45,9 +45,8 @@ function ViewQuotes() {
           const quotesWithDetails = await Promise.all(
             data._embedded.quoteses.map(async (quote) => {
               let customerName = 'Unknown Customer';
-              let products = []; // Default to an empty array
+              let products = []; 
 
-              // *** 2. Fetch BOTH customer and products concurrently ***
               if (quote._links) {
                 if (quote._links.customer) {
                   customerName = await getCustomerName(quote._links.customer.href);
@@ -57,7 +56,6 @@ function ViewQuotes() {
                 }
               }
               
-              // Return the quote object enriched with the new details
               return { ...quote, customerName, products };
             })
           );

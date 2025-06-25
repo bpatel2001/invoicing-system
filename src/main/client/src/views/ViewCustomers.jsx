@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 
-// Helper to fetch quotes for a customer
 async function fetchCustomerQuotes(quotesUrl) {
   try {
     const res = await fetch(quotesUrl);
@@ -11,7 +10,6 @@ async function fetchCustomerQuotes(quotesUrl) {
       }
     }
   } catch (e) {
-    // ignore error
   }
   return [];
 }
@@ -24,7 +22,6 @@ function ViewCustomers() {
       .then(response => response.json())
       .then(async data => {
         if (data && data._embedded && Array.isArray(data._embedded.customerses)) {
-          // For each customer, fetch their quotes
           const customersWithQuotes = await Promise.all(
             data._embedded.customerses.map(async (customer) => {
               let quotes = [];
