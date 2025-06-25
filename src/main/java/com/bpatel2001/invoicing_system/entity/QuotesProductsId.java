@@ -18,7 +18,7 @@ public class QuotesProductsId implements Serializable {
 
     }
 
-    public QuotesProductsId(int productId, int quoteId) {
+    public QuotesProductsId(int quoteId, int productId) {
         this.productId = productId;
         this.quoteId = quoteId;
     }

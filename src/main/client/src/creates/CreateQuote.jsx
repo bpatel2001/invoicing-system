@@ -65,7 +65,7 @@ function CreateQuote() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          customer: `http://localhost:8080/customers/${selectedCustomerId}`,
+          customer: `/${selectedCustomerId}`,
           status: 'NOT_SIGNED',
           totalCost: quoteItems.reduce((total, item) => total + (item.product.price * item.quantity), 0)
         })
@@ -74,7 +74,8 @@ function CreateQuote() {
       if (!quoteResponse.ok) throw new Error('Failed to create the quote.');
 
       const newQuote = await quoteResponse.json();
-      const newQuoteId = newQuote.id;
+      const selfHref = newQuote._links?.self?.href;
+      const newQuoteId = selfHref ? selfHref.split('/').pop() : undefined;
       
       for (const item of quoteItems) {
         const productId = item.product._links.self.href.split('/').pop();

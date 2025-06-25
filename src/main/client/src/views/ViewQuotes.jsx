@@ -94,13 +94,16 @@ function ViewQuotes() {
                 <div style={{ marginLeft: '20px', marginTop: '10px' }}>
                   <strong>Products:</strong>
                   <ul>
-                    {quote.products.map((product, productIdx) => (
-                      <li key={productIdx}>
-                        {product.productName || 'Unknown Product'} - 
-                        Quantity: {product.quantity}, 
-                        Price: ${product.priceAtQuote.toFixed(2)} each
-                      </li>
-                    ))}
+                    {quote.products.map((product, productIdx) => {
+                      console.log(product); // This will log each product object to the console
+                      return (
+                        <li key={productIdx}>
+                          {(product.productName || product.name || product.product?.name || 'Unknown Product')} - 
+                          Quantity: {product.quantity}, 
+                          Price: ${Number(product.priceAtQuote).toFixed(2)} each
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               )}

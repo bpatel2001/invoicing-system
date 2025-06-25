@@ -31,7 +31,6 @@ public class QuotesProductsService {
         Optional<QuotesProducts> existingEntry = quotesProductsRepository.findById(id);
 
         if (existingEntry.isPresent()) {
-            // The UPDATE logic is fine, no changes needed here.
             QuotesProducts quotesProductToUpdate = existingEntry.get();
             quotesProductToUpdate.setQuantity(dto.getQuantity());
             quotesProductToUpdate.setPriceAtQuote(dto.getPriceAtQuote());
@@ -39,35 +38,25 @@ public class QuotesProductsService {
             return quotesProductsRepository.save(quotesProductToUpdate);
 
         } else {
-            // --- REVISED INSERT LOGIC ---
-            
-            // First, fetch the parent entities. This is correct.
             Quotes quote = quotesRepository.findById(dto.getQuoteId())
                     .orElseThrow(() -> new EntityNotFoundException("Quote not found with id: " + dto.getQuoteId()));
 
             Products product = productsRepository.findById(dto.getProductId())
                     .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + dto.getProductId()));
 
-            // Create a new instance
             QuotesProducts newQuotesProduct = new QuotesProducts();
-
-            // Set the relationships. DO NOT set the ID manually.
-            // @MapsId will instruct JPA to populate the ID from these objects at save time.
+            newQuotesProduct.setId(new QuotesProductsId(dto.getQuoteId(), dto.getProductId()));
             newQuotesProduct.setQuote(quote);
             newQuotesProduct.setProduct(product);
-            
-            // Set the extra columns on the join entity
             newQuotesProduct.setQuantity(dto.getQuantity());
             newQuotesProduct.setPriceAtQuote(dto.getPriceAtQuote());
 
-            // Save the new entry
             return quotesProductsRepository.save(newQuotesProduct);
         }
     }
 
     @Transactional
     public void deleteAllQuoteProducts() {
-        // JpaRepository provides a highly efficient deleteAll() method
         quotesProductsRepository.deleteAll();
     }
 }

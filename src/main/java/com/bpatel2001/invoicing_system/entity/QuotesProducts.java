@@ -81,6 +81,11 @@ public class QuotesProducts {
         this.priceAtQuote = priceAtQuote;
     }
 
+    @Transient
+    public String getProductName() {
+        return product != null ? product.getName() : null;
+    }
+
     // --- equals() and hashCode() ---
 
     @Override
