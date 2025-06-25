@@ -72,6 +72,22 @@ function ViewQuotes() {
       });
   }, []);
 
+  const handleDeleteQuote = async (quote) => {
+    const quoteUrl = quote._links?.self?.href;
+    if (!quoteUrl) return;
+    if (!window.confirm(`Delete quote #${quote._links.self.href.split('/').pop()}?`)) return;
+    try {
+      const res = await fetch(quoteUrl, { method: 'DELETE' });
+      if (res.ok) {
+        setQuotes(quotes.filter(q => q._links.self.href !== quoteUrl));
+      } else {
+        alert('Failed to delete quote.');
+      }
+    } catch (e) {
+      alert('Error deleting quote.');
+    }
+  };
+
   return (
     <div>
       <div className="navbar">
@@ -83,19 +99,21 @@ function ViewQuotes() {
       <h1>View Quotes</h1>
       <ul>
         {quotes.map((quote, idx) => {
-          // Use a stable key for the quote list item
           const quoteId = quote._links?.self?.href || idx;
           return (
             <li key={quoteId}>
               <strong>Customer:</strong> {quote.customerName} | <strong>Quote ID:</strong> {quote._links.self.href.split('/').pop()} | <strong>Status:</strong> {quote.status}
-              
-              {/* *** 3. Render the list of products for this quote *** */}
+              <button
+                style={{ marginLeft: '10px', color: 'red' }}
+                onClick={() => handleDeleteQuote(quote)}
+              >
+                Delete
+              </button>
               {quote.products && quote.products.length > 0 && (
                 <div style={{ marginLeft: '20px', marginTop: '10px' }}>
                   <strong>Products:</strong>
                   <ul>
                     {quote.products.map((product, productIdx) => {
-                      console.log(product); // This will log each product object to the console
                       return (
                         <li key={productIdx}>
                           {(product.productName || product.name || product.product?.name || 'Unknown Product')} - 
@@ -113,7 +131,7 @@ function ViewQuotes() {
       </ul>
       <div className = "create">
         <button onClick={() => window.location.href = '/createquote'}>Create Quote</button>
-      </div>    
+      </div>      
     </div>
   );
 }

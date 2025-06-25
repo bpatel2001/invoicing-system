@@ -19,6 +19,22 @@ function ViewProducts() {
       });
   }, []);
 
+  const handleDeleteProduct = async (product) => {
+    const productUrl = product._links?.self?.href;
+    if (!productUrl) return;
+    if (!window.confirm(`Delete product "${product.name}"?`)) return;
+    try {
+      const res = await fetch(productUrl, { method: 'DELETE' });
+      if (res.ok) {
+        setProducts(products.filter(p => p._links.self.href !== productUrl));
+      } else {
+        alert('Failed to delete product.');
+      }
+    } catch (e) {
+      alert('Error deleting product.');
+    }
+  };
+
   return (
     <div>
       <div className="navbar">
@@ -36,6 +52,12 @@ function ViewProducts() {
           return (
             <li key={id}>
               ID: {id} | Name: {product.name} | Price: {product.price}
+              <button
+                style={{ marginLeft: '10px', color: 'red' }}
+                onClick={() => handleDeleteProduct(product)}
+              >
+                Delete
+              </button>
             </li>
           );
         })}

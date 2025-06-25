@@ -45,6 +45,22 @@ function ViewCustomers() {
       });
   }, []);
 
+  const handleDeleteCustomer = async (customer) => {
+    const customerUrl = customer._links?.self?.href;
+    if (!customerUrl) return;
+    if (!window.confirm(`Delete customer "${customer.name}"?`)) return;
+    try {
+      const res = await fetch(customerUrl, { method: 'DELETE' });
+      if (res.ok) {
+        setCustomers(customers.filter(c => c._links.self.href !== customerUrl));
+      } else {
+        alert('Failed to delete customer.');
+      }
+    } catch (e) {
+      alert('Error deleting customer.');
+    }
+  };
+
   return (
     <div>
       <div className="navbar">
@@ -62,6 +78,12 @@ function ViewCustomers() {
           return (
             <li key={id}>
               ID: {id} | Name: {customer.name} | Address: {customer.address}
+              <button
+                style={{ marginLeft: '10px', color: 'red' }}
+                onClick={() => handleDeleteCustomer(customer)}
+              >
+                Delete
+              </button>
               {customer.quotes && customer.quotes.length > 0 && (
                 <ul>
                   {customer.quotes.map((quote, qidx) => {
