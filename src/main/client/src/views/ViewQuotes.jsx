@@ -97,7 +97,7 @@ function ViewQuotes() {
         {quotes.map((quote, idx) => {
           const quoteId = quote._links?.self?.href || idx;
           return (
-            <li key={quoteId}>
+            <li className = "idk" key={quoteId}>
               <strong>Customer:</strong> {quote.customerName} | <strong>Quote ID:</strong> {quote._links.self.href.split('/').pop()} | <strong>Status:</strong> {quote.status}
               {' | '}
               <Link to={`/viewquotes/${quote._links.self.href.split('/').pop()}`}>
@@ -110,7 +110,7 @@ function ViewQuotes() {
                 Delete
               </button>
               {quote.products && quote.products.length > 0 && (
-                <div>
+                <div className = "idk2">
                   <strong>Products:</strong>
                   <ul>
                     {quote.products.map((product, productIdx) => {

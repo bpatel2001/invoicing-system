@@ -73,10 +73,9 @@ function ViewCustomers() {
             ? customer._links.self.href.split('/').pop()
             : idx);
           return (
-            <li key={id}>
+            <li className = "idk" key={id}>
               ID: {id} | Name: {customer.name} | Address: {customer.address}
               <button
-                style={{ marginLeft: '10px', color: 'red' }}
                 onClick={() => handleDeleteCustomer(customer)}
               >
                 Delete
@@ -88,7 +87,7 @@ function ViewCustomers() {
                       ? quote._links.self.href.split('/').pop()
                       : qidx);
                     return (
-                      <li key={qid}>
+                      <li className = "idk2" key={qid}>
                         Quote ID: {qid} | Status: {quote.status} | Total Cost: {quote.totalCost}
                       </li>
                     );

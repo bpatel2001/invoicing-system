@@ -50,10 +50,9 @@ function ViewProducts() {
             ? product._links.self.href.split('/').pop()
             : idx);
           return (
-            <li key={id}>
+            <li className = "idk"  key={id}>
               ID: {id} | Name: {product.name} | Price: {product.price}
-              <button
-                style={{ marginLeft: '10px', color: 'red' }}
+              <button className = "delete-button"
                 onClick={() => handleDeleteProduct(product)}
               >
                 Delete

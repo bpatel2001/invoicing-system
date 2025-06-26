@@ -8,16 +8,15 @@ import java.util.Objects;
 @Table(name="quote_products")
 public class QuotesProducts {
     
-    // The Fix: Initialize the embedded ID to prevent NullPointerException.
     @EmbeddedId
     private QuotesProductsId id = new QuotesProductsId();
 
-    @ManyToOne(fetch = FetchType.LAZY) // Using LAZY fetch is a good practice for performance
+    @ManyToOne(fetch = FetchType.LAZY) 
     @MapsId("quoteId")
     @JoinColumn(name="quote_id")
     private Quotes quote;
 
-    @ManyToOne(fetch = FetchType.LAZY) // Using LAZY fetch is a good practice for performance
+    @ManyToOne(fetch = FetchType.LAZY) 
     @MapsId("productId")
     @JoinColumn(name = "product_id")
     private Products product;
@@ -28,7 +27,6 @@ public class QuotesProducts {
     @Column(name = "price_at_quote", nullable = false)
     private double priceAtQuote;
 
-    // A no-argument constructor is required by JPA
     public QuotesProducts() {
     }
 
@@ -38,8 +36,6 @@ public class QuotesProducts {
         this.quantity = quantity;
         this.priceAtQuote = priceAtQuote;
     }
-
-    // --- Getters and Setters ---
 
     public QuotesProductsId getId() {
         return id;
@@ -85,8 +81,6 @@ public class QuotesProducts {
     public String getProductName() {
         return product != null ? product.getName() : null;
     }
-
-    // --- equals() and hashCode() ---
 
     @Override
     public boolean equals(Object o) {
