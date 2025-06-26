@@ -14,6 +14,8 @@ function App() {
         <button onClick={() => window.location.href = '/viewproducts'}>View Products</button>
         <button onClick={() => window.location.href = '/viewcustomers'}>View Customers</button>
       </div>
+      <h1>Welcome to the Quote Management System</h1>
+      <h2>Create customer and product before creating a quote</h2>
       <div className="create">
         <button onClick={() => window.location.href = '/createquote'}>Create Quote</button>
       </div>

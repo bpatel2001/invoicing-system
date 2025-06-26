@@ -5,6 +5,7 @@ import App from './App.jsx'
 import ViewQuotes from './views/ViewQuotes.jsx'
 import ViewCustomers from './views/ViewCustomers.jsx'
 import ViewProducts from './views/ViewProducts.jsx'
+import ViewSingleQuote from './views/ViewSingleQuote.jsx'
 import CreateQuote from './creates/CreateQuote.jsx'
 import CreateCustomer from './creates/CreateCustomer.jsx'
 import CreateProduct from './creates/CreateProduct.jsx'
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
     {
       path: '/viewcustomers',
       element: <ViewCustomers />
+    },
+    {
+      path: '/viewquotes/:id',
+      element: <ViewSingleQuote/>
     },
     {
       path: '/createquote',

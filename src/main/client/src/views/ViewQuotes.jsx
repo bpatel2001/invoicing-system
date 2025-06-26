@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-// Helper function for fetching the customer name
 async function getCustomerName(customerLink) {
   try {
     const response = await fetch(customerLink);
@@ -15,7 +15,6 @@ async function getCustomerName(customerLink) {
   }
 }
 
-// *** 1. NEW Helper function for fetching the products of a quote ***
 async function getQuoteProducts(productsLink) {
   try {
     const response = await fetch(productsLink);
@@ -23,14 +22,13 @@ async function getQuoteProducts(productsLink) {
       throw new Error('Network response was not ok for products');
     }
     const data = await response.json();
-    // The products are in the _embedded.quotesProductses array
     if (data && data._embedded && Array.isArray(data._embedded.quotesProductses)) {
       return data._embedded.quotesProductses;
     }
-    return []; // Return an empty array if no products are found
+    return []; 
   } catch (error) {
     console.error('Error fetching quote products:', error);
-    return []; // Return an empty array on error
+    return []; 
   }
 }
 
@@ -101,14 +99,18 @@ function ViewQuotes() {
           return (
             <li key={quoteId}>
               <strong>Customer:</strong> {quote.customerName} | <strong>Quote ID:</strong> {quote._links.self.href.split('/').pop()} | <strong>Status:</strong> {quote.status}
+              {' | '}
+              <Link to={`/viewquotes/${quote._links.self.href.split('/').pop()}`}>
+                Go to Quote
+              </Link>
+              {' | '}
               <button
-                style={{ marginLeft: '10px', color: 'red' }}
                 onClick={() => handleDeleteQuote(quote)}
               >
                 Delete
               </button>
               {quote.products && quote.products.length > 0 && (
-                <div style={{ marginLeft: '20px', marginTop: '10px' }}>
+                <div>
                   <strong>Products:</strong>
                   <ul>
                     {quote.products.map((product, productIdx) => {
