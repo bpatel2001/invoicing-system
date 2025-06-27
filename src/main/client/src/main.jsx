@@ -13,10 +13,6 @@ import CreateProduct from './creates/CreateProduct.jsx'
 const router = createBrowserRouter([
     {
       path: '/',
-      element: <App />,
-    },
-    {
-      path: '/viewquotes',
       element: <ViewQuotes />
     },
     {

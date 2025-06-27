@@ -88,11 +88,11 @@ function ViewQuotes() {
     <div>
       <div className="navbar">
         <button onClick={() => window.location.href = '/'}>Home</button>
-        <button onClick={() => window.location.href = '/viewquotes'}>View Quotes</button>
         <button onClick={() => window.location.href = '/viewproducts'}>View Products</button>
         <button onClick={() => window.location.href = '/viewcustomers'}>View Customers</button>
       </div>
-      <h1>View Quotes</h1>
+      <h1 className = "welcome">Welcome to the Quote Management System</h1>
+      <h2 className = "paragraph">Create customer and product before creating a quote</h2>
       <ul>
         {quotes.map((quote, idx) => {
           const quoteId = quote._links?.self?.href || idx;
