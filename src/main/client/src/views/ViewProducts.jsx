@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import '../AppStyles.css';
 
 function ViewProducts() {
   const [products, setProducts] = useState([]);
@@ -49,10 +50,11 @@ function ViewProducts() {
             ? product._links.self.href.split('/').pop()
             : idx);
           return (
-            <li className = "idk"  key={id}>
-              ID: {id} | Name: {product.name} | Price: {product.price}
-              <button className = "delete-button"
+            <li className="idk" key={id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center' }}>
+              <span><strong>ID:</strong> {id} | <strong>Name:</strong> {product.name} | <strong>Price:</strong> ${Number(product.price).toFixed(2)}</span>
+              <button className="delete-button small-btn"
                 onClick={() => handleDeleteProduct(product)}
+                style={{ width: 'auto', minWidth: '70px', marginLeft: '12px', padding: '6px 12px' }}
               >
                 Delete
               </button>
@@ -60,7 +62,7 @@ function ViewProducts() {
           );
         })}
       </ul>
-      <div className = "create">
+      <div className="create">
         <button onClick={() => window.location.href = '/createproduct'}>Create Product</button>
       </div> 
     </div>

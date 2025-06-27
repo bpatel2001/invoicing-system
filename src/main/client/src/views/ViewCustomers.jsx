@@ -72,15 +72,16 @@ function ViewCustomers() {
             ? customer._links.self.href.split('/').pop()
             : idx);
           return (
-            <li className = "idk" key={id}>
-              ID: {id} | Name: {customer.name} | Address: {customer.address}
+            <li className="idk" key={id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center' }}>
+              <span>ID: {id} | Name: {customer.name} | Address: {customer.address}</span>
               <button
                 onClick={() => handleDeleteCustomer(customer)}
+                style={{ width: 'auto', minWidth: '70px', marginLeft: '12px', padding: '6px 12px', background: 'red', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 600, cursor: 'pointer' }}
               >
                 Delete
               </button>
               {customer.quotes && customer.quotes.length > 0 && (
-                <ul>
+                <ul style={{ gridColumn: '1 / -1' }}>
                   {customer.quotes.map((quote, qidx) => {
                     const qid = quote.id || (quote._links && quote._links.self
                       ? quote._links.self.href.split('/').pop()

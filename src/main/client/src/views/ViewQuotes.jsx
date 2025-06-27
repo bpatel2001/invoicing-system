@@ -97,20 +97,24 @@ function ViewQuotes() {
         {quotes.map((quote, idx) => {
           const quoteId = quote._links?.self?.href || idx;
           return (
-            <li className = "idk" key={quoteId}>
-              <strong>Customer:</strong> {quote.customerName} | <strong>Quote ID:</strong> {quote._links.self.href.split('/').pop()} | <strong>Status:</strong> {quote.status}
-              {' | '}
-              <Link to={`/viewquotes/${quote._links.self.href.split('/').pop()}`}>
-                Go to Quote
-              </Link>
-              {' | '}
-              <button
+            <li className="idk" key={quoteId} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+                <strong>Customer:</strong> {quote.customerName} | <strong>Quote ID:</strong> {quote._links.self.href.split('/').pop()} | <strong>Status:</strong>
+                <span style={{ color: quote.status === 'NOT_SIGNED' ? 'red' : quote.status === 'SIGNED' ? 'green' : 'black', fontWeight: 'bold', marginLeft: 4, marginRight: 8 }}>
+                  {quote.status === 'NOT_SIGNED' ? 'Unsigned' : quote.status === 'SIGNED' ? 'Signed' : quote.status}
+                </span>
+                <Link to={`/viewquotes/${quote._links.self.href.split('/').pop()}`} style={{ marginLeft: 8 }}>
+                  Go to Quote
+                </Link>
+              </div>
+              <button className="delete-button small-btn"
                 onClick={() => handleDeleteQuote(quote)}
+                style={{ width: 'auto', minWidth: '70px', marginLeft: '12px', padding: '6px 12px', background: 'red', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 600, cursor: 'pointer' }}
               >
                 Delete
               </button>
               {quote.products && quote.products.length > 0 && (
-                <div className = "idk2">
+                <div className = "idk2" style={{ gridColumn: '1 / -1' }}>
                   <strong>Products:</strong>
                   <ul>
                     {quote.products.map((product, productIdx) => {

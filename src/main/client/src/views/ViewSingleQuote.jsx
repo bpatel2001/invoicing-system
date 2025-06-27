@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import '../AppStyles.css';
 
 async function getCustomerName(customerLink) {
   try {
@@ -117,7 +118,7 @@ function ViewSingleQuote() {
   }
 
   if (error) {
-    return <div>Error: {error} <Link to="/viewquotes">Go back to quotes list.</Link></div>;
+    return <div className="error-message">Error: {error} <Link to="/viewquotes">Go back to quotes list.</Link></div>;
   }
 
   if (!quote) {
@@ -134,10 +135,10 @@ function ViewSingleQuote() {
 
       <h1>Quote Details (ID: {id})</h1>
 
-      <div>
+      <div className="idk">
         <p><strong>Customer:</strong> {quote.customerName}</p>
         <p><strong>Status:</strong> 
-          <span>
+          <span style={{ color: quote.status === 'SIGNED' ? '#27ae60' : '#e74c3c', fontWeight: 'bold' }}>
             {quote.status}
           </span>
         </p>
@@ -158,7 +159,7 @@ function ViewSingleQuote() {
         )}
 
         {quote.status !== 'Signed' && (
-            <div>
+            <div style={{ marginTop: '18px' }}>
                 <h3>Customer Signature</h3>
                 <p>By clicking "Sign Quote", you agree to the terms and conditions outlined in this document.</p>
                 <button onClick={handleSignQuote}>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import '../AppStyles.css';
 
 async function createCustomer(customerName, customerAddress) {
   try {

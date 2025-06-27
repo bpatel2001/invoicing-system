@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import '../AppStyles.css';
 
 function CreateQuote() {
   const [customers, setCustomers] = useState([]);
@@ -113,7 +114,6 @@ function CreateQuote() {
         <button onClick={() => window.location.href = '/viewcustomers'}>View Customers</button>
       </div>
       <h1>Create a New Quote</h1>
-      
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="customer-select"><strong>1. Select a Customer:</strong></label>
@@ -131,10 +131,9 @@ function CreateQuote() {
             ))}
           </select>
         </div>
-
-        <div style={{ marginTop: '20px' }}>
+        <div>
             <label><strong>2. Add Products to Quote:</strong></label>
-            <div>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                 <select id="product-select" defaultValue="">
                     <option value="">-- Choose a Product --</option>
                     {products.map(product => (
@@ -143,13 +142,12 @@ function CreateQuote() {
                         </option>
                     ))}
                 </select>
-                <input id="quantity-input" type="number" min="1" defaultValue="1" style={{ marginLeft: '10px', width: '60px' }} />
-                <button type="button" onClick={handleAddProduct} style={{ marginLeft: '10px' }}>Add Product</button>
+                <input id="quantity-input" type="number" min="1" defaultValue="1" style={{ width: '60px' }} />
+                <button type="button" onClick={handleAddProduct}>Add Product</button>
             </div>
         </div>
-
         {quoteItems.length > 0 && (
-            <div style={{ marginTop: '20px', border: '1px solid #ccc', padding: '10px' }}>
+            <div className="current-quote-items">
                 <h3>Current Quote Items:</h3>
                 <ul>
                     {quoteItems.map((item, index) => (
@@ -161,15 +159,13 @@ function CreateQuote() {
                 <h4>Total: ${quoteItems.reduce((total, item) => total + (item.product.price * item.quantity), 0).toFixed(2)}</h4>
             </div>
         )}
-        
-        <div style={{ marginTop: '20px' }}>
+        <div>
           <button type="submit" disabled={isLoading}>
             {isLoading ? 'Creating...' : 'Create Final Quote'}
           </button>
         </div>
       </form>
-
-      {message && <p style={{ marginTop: '20px' }}>{message}</p>}
+      {message && <p className={message.startsWith('Success') ? 'success-message' : 'error-message'} style={{ marginTop: '20px' }}>{message}</p>}
     </div>
   );
 }
