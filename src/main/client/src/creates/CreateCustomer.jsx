@@ -4,7 +4,7 @@ import '../AppStyles.css';
 
 async function createCustomer(customerName, customerAddress) {
   try {
-    const response = await apiFetch('customers', {
+    const response = await apiFetch('/customers', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
