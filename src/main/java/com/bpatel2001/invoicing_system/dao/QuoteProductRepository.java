@@ -9,6 +9,6 @@ import com.bpatel2001.invoicing_system.entity.QuotesProductsId;
 
 @CrossOrigin(origins = {"http://localhost:5173",
                         "https://invoicing-system-1.onrender.com/"})
-@RepositoryRestResource(path="quotesproducts")
+@RepositoryRestResource(path = "quotesproducts")
 public interface QuoteProductRepository extends JpaRepository<QuotesProducts, QuotesProductsId> {
 }
