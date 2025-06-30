@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+import { apiFetch } from '../api';
 import '../AppStyles.css';
 
 function ViewProducts() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/products')
+    apiFetch('/products')
       .then(response => response.json())
       .then(data => {
         if (data && data._embedded && Array.isArray(data._embedded.productses)) {
@@ -25,7 +26,7 @@ function ViewProducts() {
     if (!productUrl) return;
     if (!window.confirm(`Delete product "${product.name}"?`)) return;
     try {
-      const res = await fetch(productUrl, { method: 'DELETE' });
+      const res = await apiFetch(productUrl, { method: 'DELETE' });
       if (res.ok) {
         setProducts(products.filter(p => p._links.self.href !== productUrl));
       } else {

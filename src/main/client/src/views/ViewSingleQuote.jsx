@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { apiFetch } from '../api';
 import '../AppStyles.css';
 
 async function getCustomerName(customerLink) {
   try {
-    const response = await fetch(customerLink);
+    const response = await apiFetch(customerLink);
     if (!response.ok) {
       throw new Error('Network response was not ok while fetching customer.');
     }
@@ -18,7 +19,7 @@ async function getCustomerName(customerLink) {
 
 async function getQuoteProducts(productsLink) {
   try {
-    const response = await fetch(productsLink);
+    const response = await apiFetch(productsLink);
     if (!response.ok) {
       throw new Error('Network response was not ok for products');
     }
@@ -45,7 +46,7 @@ function ViewSingleQuote() {
     const fetchSingleQuote = async () => {
       try {
         setLoading(true);
-        const quoteResponse = await fetch(`http://localhost:8080/quotes/${id}`);
+        const quoteResponse = await apiFetch(`/quotes/${id}`);
         if (!quoteResponse.ok) {
           throw new Error(`Quote not found. Status: ${quoteResponse.status}`);
         }
@@ -86,7 +87,7 @@ function ViewSingleQuote() {
     }
 
     try {
-        const response = await fetch(`http://localhost:8080/quotes/${id}`, {
+        const response = await apiFetch(`/quotes/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

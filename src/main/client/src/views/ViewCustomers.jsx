@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { apiFetch } from '../api'; 
 
 async function fetchCustomerQuotes(quotesUrl) {
   try {
-    const res = await fetch(quotesUrl);
+    const res = await apiFetch(quotesUrl);
     if (res.ok) {
       const data = await res.json();
       if (data && data._embedded && Array.isArray(data._embedded.quoteses)) {
@@ -18,7 +19,7 @@ function ViewCustomers() {
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/customers')
+    apiFetch('/customers')
       .then(response => response.json())
       .then(async data => {
         if (data && data._embedded && Array.isArray(data._embedded.customerses)) {
@@ -47,7 +48,7 @@ function ViewCustomers() {
     if (!customerUrl) return;
     if (!window.confirm(`Delete customer "${customer.name}"?`)) return;
     try {
-      const res = await fetch(customerUrl, { method: 'DELETE' });
+      const res = await apiFetch(customerUrl, { method: 'DELETE' });
       if (res.ok) {
         setCustomers(customers.filter(c => c._links.self.href !== customerUrl));
       } else {

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { apiFetch } from '../api';
 
 async function getCustomerName(customerLink) {
   try {
-    const response = await fetch(customerLink);
+    const response = await apiFetch(customerLink);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -17,7 +18,7 @@ async function getCustomerName(customerLink) {
 
 async function getQuoteProducts(productsLink) {
   try {
-    const response = await fetch(productsLink);
+    const response = await apiFetch(productsLink);
     if (!response.ok) {
       throw new Error('Network response was not ok for products');
     }
@@ -36,7 +37,7 @@ function ViewQuotes() {
   const [quotes, setQuotes] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/quotes')
+    apiFetch('/quotes')
       .then(response => response.json())
       .then(async data => {
         if (data && data._embedded && Array.isArray(data._embedded.quoteses)) {
@@ -73,7 +74,7 @@ function ViewQuotes() {
     if (!quoteUrl) return;
     if (!window.confirm(`Delete quote #${quote._links.self.href.split('/').pop()}?`)) return;
     try {
-      const res = await fetch(quoteUrl, { method: 'DELETE' });
+      const res = await apiFetch(quoteUrl, { method: 'DELETE' });
       if (res.ok) {
         setQuotes(quotes.filter(q => q._links.self.href !== quoteUrl));
       } else {
