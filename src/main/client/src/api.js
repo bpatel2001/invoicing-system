@@ -1,5 +1,5 @@
 // Example apiFetch.js
-const API_BASE = 'http://localhost:8080';
+const API_BASE = 'https://invoicing-system-8sa3.onrender.com';
 
 export function apiFetch(url, options) {
   // If url starts with http:// or https://, don't prepend base
