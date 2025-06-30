@@ -13,7 +13,7 @@ import com.bpatel2001.invoicing_system.entity.QuotesProducts;
 import com.bpatel2001.invoicing_system.service.QuotesProductsService;
 
 @CrossOrigin(origins = {"http://localhost:5173",
-                        "https://invoicing-system-1.onrender.com/"})
+                        "https://invoicing-system-1.onrender.com"})
 @RequestMapping("/api/quotesproducts")
 public class QuotesProductsController {
 
