@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
+import { apiFetch } from '../api'; 
 import '../AppStyles.css';
 
 async function createProduct(productName, productPrice) {
   try {
-    const response = await fetch('http://localhost:8080/products', {
+    const response = await apiFetch('/products', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
+import { apiFetch } from '../api'; 
 import '../AppStyles.css';
 
 async function createCustomer(customerName, customerAddress) {
   try {
-    const response = await fetch('http://localhost:8080/customers', {
+    const response = await apiFetch('customers', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

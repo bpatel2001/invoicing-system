@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { apiFetch } from '../api'; 
 import '../AppStyles.css';
 
 function CreateQuote() {
@@ -10,7 +11,7 @@ function CreateQuote() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:8080/customers')
+    apiFetch('/customers')
       .then(response => response.json())
       .then(data => {
         if (data && data._embedded && Array.isArray(data._embedded.customerses)) {
@@ -19,7 +20,7 @@ function CreateQuote() {
       })
       .catch(error => console.error('Error fetching customers:', error));
 
-    fetch('http://localhost:8080/products')
+    apiFetch('/products')
       .then(response => response.json())
       .then(data => {
         if (data && data._embedded && Array.isArray(data._embedded.productses)) {
@@ -62,7 +63,7 @@ function CreateQuote() {
     setMessage('Creating quote...');
 
     try {
-      const quoteResponse = await fetch('http://localhost:8080/quotes', {
+      const quoteResponse = await apiFetch('/quotes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -80,7 +81,7 @@ function CreateQuote() {
       
       for (const item of quoteItems) {
         const productId = item.product._links.self.href.split('/').pop();
-        const productResponse = await fetch('http://localhost:8080/api/quotesproducts', {
+        const productResponse = await apiFetch('/api/quotesproducts', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
