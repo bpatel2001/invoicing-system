@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.bpatel2001.invoicing_system.entity.Products;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173",
+                        "https://invoicing-system-1.onrender.com/"})
 @RepositoryRestResource(path="products")
 public interface ProductRepository extends JpaRepository<Products, Integer> {
 }
