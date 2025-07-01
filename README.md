@@ -1,6 +1,6 @@
 # Invoicing System
 
-This is a full-stack web application for creating and managing invoices, built for the individual project section of the MultiVerse bootcamp. It provides a user-friendly interface to view, create, edit, and delete invoices.
+This is a full-stack web application for creating and managing invoices, built for the individual project section of the MultiVerse bootcamp. It provides a user-friendly interface to view, create, and delete invoices.
 
 **Live Application:** [https://invoicing-system-1.onrender.com/](https://invoicing-system-1.onrender.com/)
 
