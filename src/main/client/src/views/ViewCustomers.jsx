@@ -74,27 +74,13 @@ function ViewCustomers() {
             : idx);
           return (
             <li className="idk" key={id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center' }}>
-              <span>ID: {id} | Name: {customer.name} | Address: {customer.address}</span>
+              <span><strong>ID:</strong> {id} | <strong>Name:</strong> {customer.name} | <strong>Email:</strong> {customer.email} | <strong>Address:</strong> {customer.address}</span>
               <button
                 onClick={() => handleDeleteCustomer(customer)}
                 style={{ width: 'auto', minWidth: '70px', marginLeft: '12px', padding: '6px 12px', background: 'red', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 600, cursor: 'pointer' }}
               >
                 Delete
               </button>
-              {customer.quotes && customer.quotes.length > 0 && (
-                <ul style={{ gridColumn: '1 / -1' }}>
-                  {customer.quotes.map((quote, qidx) => {
-                    const qid = quote.id || (quote._links && quote._links.self
-                      ? quote._links.self.href.split('/').pop()
-                      : qidx);
-                    return (
-                      <li className = "idk2" key={qid}>
-                        Quote ID: {qid} | Status: {quote.status} | Total Cost: {quote.totalCost}
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
             </li>
           );
         })}

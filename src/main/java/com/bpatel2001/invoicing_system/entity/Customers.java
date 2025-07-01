@@ -26,6 +26,9 @@ public class Customers {
     @Column(name="address", columnDefinition = "TEXT")
     private String address;
 
+    @Column(name="email", unique = true, nullable = false)
+    private String email;
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Quotes> quotes;
 
@@ -70,12 +73,21 @@ public class Customers {
         this.quotes = quotes;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         return "Customers{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 
@@ -84,11 +96,11 @@ public class Customers {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customers customer = (Customers) o;
-        return Objects.equals(id, customer.id); // Equality based on ID
+        return Objects.equals(id, customer.id); 
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id); // Hash based on ID
+        return Objects.hash(id); 
     }
 }

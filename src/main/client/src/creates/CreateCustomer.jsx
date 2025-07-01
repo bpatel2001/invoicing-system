@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { apiFetch } from '../api'; 
 import '../AppStyles.css';
 
-async function createCustomer(customerName, customerAddress) {
+async function createCustomer(customerName, customerAddress, customerEmail) {
   try {
     const response = await apiFetch('/customers', {
       method: 'POST',
@@ -11,7 +11,8 @@ async function createCustomer(customerName, customerAddress) {
       },
       body: JSON.stringify({
         name: customerName,
-        address: customerAddress
+        address: customerAddress,
+        email: customerEmail
       })
     });
     
@@ -30,14 +31,16 @@ async function createCustomer(customerName, customerAddress) {
 function CreateCustomer() {
   const [customerName, setCustomerName] = useState('');
   const [customerAddress, setCustomerAddress] = useState('');
+  const [customerEmail, setCustomerEmail] = useState(''); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const newCustomer = await createCustomer(customerName, customerAddress);
+      const newCustomer = await createCustomer(customerName, customerAddress, customerEmail);
       alert(`Customer created successfully: ${newCustomer.name}`);
       setCustomerName('');
       setCustomerAddress('');
+      setCustomerEmail('');
       window.location.href = '/viewcustomers'; 
     } catch (error) {
       alert('Failed to create customer. Please try again.');
@@ -71,6 +74,17 @@ function CreateCustomer() {
               type="text"
               value={customerAddress}
               onChange={(e) => setCustomerAddress(e.target.value)}
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Email:
+            <input
+              type="text"
+              value={customerEmail}
+              onChange={(e) => setCustomerEmail(e.target.value)}
               required
             />
           </label>
