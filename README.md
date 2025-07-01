@@ -1,4 +1,4 @@
-# Invoicing System 🧾
+# Invoicing System
 
 This is a full-stack web application for creating and managing invoices, built for the individual project section of the MultiVerse bootcamp. It provides a user-friendly interface to view, create, edit, and delete invoices.
 
@@ -60,7 +60,7 @@ Ensure you have the following software installed on your machine:
 
 ---
 
-## 🖼️ Wireframe
+## Wireframe
 
 The application's design was based on the following wireframe, which outlines the core structure and user interface.
 
