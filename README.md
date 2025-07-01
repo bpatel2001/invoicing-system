@@ -60,6 +60,18 @@ Ensure you have the following software installed on your machine:
 
 ---
 
+### Local Development Configuration
+
+**Important:** For the frontend to communicate with your local backend server, you must update the API endpoint.
+
+* Open the file: `src/main/client/api.js`
+* Change the `API_BASE` variable to your local server address:
+    ```javascript
+    export const API_BASE = "http://localhost:8080";
+    ```
+
+---
+
 ## Wireframe
 
 The application's design was based on the following wireframe, which outlines the core structure and user interface.
