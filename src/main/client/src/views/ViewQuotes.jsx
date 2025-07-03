@@ -100,7 +100,7 @@ function ViewQuotes() {
           return (
             <li className="idk" key={quoteId} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
-                <strong>Customer:</strong> {quote.customerName} | <strong>Quote ID:</strong> {quote._links.self.href.split('/').pop()} | <strong>Status:</strong>
+                <strong>Customer:</strong> {quote.customerName} | <strong>Quote #:</strong> {quote._links.self.href.split('/').pop()} | <strong>Status:</strong>
                 <span style={{ color: quote.status === 'NOT_SIGNED' ? 'red' : quote.status === 'SIGNED' ? 'green' : 'black', fontWeight: 'bold', marginLeft: 4, marginRight: 8 }}>
                   {quote.status === 'NOT_SIGNED' ? 'Unsigned' : quote.status === 'SIGNED' ? 'Signed' : quote.status}
                 </span>
@@ -128,6 +128,9 @@ function ViewQuotes() {
                       );
                     })}
                   </ul>
+                  <div style={{ marginTop: 6, fontWeight: 600 }}>
+                    Total Cost: ${quote.products.reduce((sum, p) => sum + (Number(p.priceAtQuote) * Number(p.quantity)), 0).toFixed(2)}
+                  </div>
                 </div>
               )}
             </li>

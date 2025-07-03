@@ -17,6 +17,20 @@ async function getCustomerName(customerLink) {
   }
 }
 
+async function getCustomerEmail(customerLink) {
+  try {
+    const response = await apiFetch(customerLink);
+    if (!response.ok) {
+      throw new Error('Network response was not ok while fetching customer email.');
+    }
+    const customer = await response.json();
+    return customer.email || 'Unknown Email';
+  } catch (error) {
+    console.error('Error fetching customer email:', error);
+    return 'Unknown Email';
+  }
+}
+
 async function getQuoteProducts(productsLink) {
   try {
     const response = await apiFetch(productsLink);
@@ -53,21 +67,24 @@ function ViewSingleQuote() {
         const quoteData = await quoteResponse.json();
 
         let customerName = 'Unknown Customer';
+        let customerEmail = 'Unknown Email';
         let products = [];
 
         if (quoteData._links) {
             const customerPromise = quoteData._links.customer 
                 ? getCustomerName(quoteData._links.customer.href) 
                 : Promise.resolve('Unknown Customer');
-            
+            const emailPromise = quoteData._links.customer 
+                ? getCustomerEmail(quoteData._links.customer.href) 
+                : Promise.resolve('Unknown Email');
             const productsPromise = quoteData._links.quotesProducts 
                 ? getQuoteProducts(quoteData._links.quotesProducts.href) 
                 : Promise.resolve([]);
 
-            [customerName, products] = await Promise.all([customerPromise, productsPromise]);
+            [customerName, customerEmail, products] = await Promise.all([customerPromise, emailPromise, productsPromise]);
         }
         
-        setQuote({ ...quoteData, customerName, products });
+        setQuote({ ...quoteData, customerName, customerEmail, products });
 
       } catch (err) {
         console.error('Error fetching single quote:', err);
@@ -138,6 +155,7 @@ function ViewSingleQuote() {
 
       <div className="idk">
         <p><strong>Customer:</strong> {quote.customerName}</p>
+        <p><strong>Email:</strong> {quote.customerEmail} </p>
         <p><strong>Status:</strong> 
           <span style={{ color: quote.status === 'SIGNED' ? '#27ae60' : '#e74c3c', fontWeight: 'bold' }}>
             {quote.status}
@@ -156,6 +174,9 @@ function ViewSingleQuote() {
                 </li>
               ))}
             </ul>
+            <div style={{ marginTop: '10px', fontWeight: 'bold' }}>
+              Total Cost: ${quote.products.reduce((total, p) => total + (Number(p.priceAtQuote) * Number(p.quantity)), 0).toFixed(2)}
+            </div>
           </div>
         )}
 

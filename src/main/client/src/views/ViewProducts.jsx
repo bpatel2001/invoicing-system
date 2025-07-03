@@ -52,7 +52,7 @@ function ViewProducts() {
             : idx);
           return (
             <li className="idk" key={id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center' }}>
-              <span><strong>ID:</strong> {id} | <strong>Name:</strong> {product.name} | <strong>Price:</strong> ${Number(product.price).toFixed(2)}</span>
+              <span><strong>Product #:</strong> {id} | <strong>Name:</strong> {product.name} | <strong>Price:</strong> ${Number(product.price).toFixed(2)}</span>
               <button className="delete-button small-btn"
                 onClick={() => handleDeleteProduct(product)}
                 style={{ width: 'auto', minWidth: '70px', marginLeft: '12px', padding: '6px 12px' }}

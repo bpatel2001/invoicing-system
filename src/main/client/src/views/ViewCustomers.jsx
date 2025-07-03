@@ -74,13 +74,34 @@ function ViewCustomers() {
             : idx);
           return (
             <li className="idk" key={id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center' }}>
-              <span><strong>ID:</strong> {id} | <strong>Name:</strong> {customer.name} | <strong>Email:</strong> {customer.email} | <strong>Address:</strong> {customer.address}</span>
+              <span><strong>Customer ID:</strong> {id} | <strong>Name:</strong> {customer.name} | <strong>Email:</strong> {customer.email} | <strong>Address:</strong> {customer.address}</span>
               <button
                 onClick={() => handleDeleteCustomer(customer)}
                 style={{ width: 'auto', minWidth: '70px', marginLeft: '12px', padding: '6px 12px', background: 'red', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 600, cursor: 'pointer' }}
               >
                 Delete
               </button>
+              {customer.quotes && customer.quotes.length > 0 && (
+                <div style={{ gridColumn: '1 / -1', marginTop: '10px' }}>
+                  <strong>Quotes assigned:</strong>
+                  <ul style={{ margin: '8px 0 0 16px', padding: 0, listStyle: 'none' }}>
+                    {customer.quotes.map((quote, qidx) => {
+                      const qid = quote.id || (quote._links && quote._links.self
+                        ? quote._links.self.href.split('/').pop()
+                        : qidx);
+                      const isSigned = quote.status === 'SIGNED';
+                      return (
+                        <li key={qid} style={{ marginBottom: 4 }}>
+                          <span><strong>Quote #:</strong> {qid} </span>
+                          <span style={{ color: isSigned ? 'green' : 'red', fontWeight: 600, marginLeft: 8 }}>
+                            {isSigned ? 'Signed' : 'Unsigned'}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
             </li>
           );
         })}
