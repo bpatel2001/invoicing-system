@@ -1,6 +1,23 @@
 import './App.css'
+import { useState } from 'react';
+import Login from './Login';
 
 function App() {
+  const [auth, setAuth] = useState(() => {
+    const saved = localStorage.getItem('auth');
+    return saved ? JSON.parse(saved) : null;
+  });
+
+  const handleLogin = (username, password) => {
+    const encoded = btoa(`${username}:${password}`);
+    setAuth(encoded);
+    localStorage.setItem('auth', JSON.stringify(encoded));
+    window.location.reload(); // reload to re-render with auth
+  };
+
+  if (!auth) {
+    return <Login onLogin={handleLogin} />;
+  }
 
   return (
     <>
